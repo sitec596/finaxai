@@ -29,8 +29,8 @@ export default function HomeTab() {
       if (data) {
         setCurrentIncome(data.monthly_income);
       }
-    } catch (error) {
-      console.log('Error loading income:', error);
+    } catch {
+      console.log('Error loading income');
     }
   };
 
@@ -49,39 +49,27 @@ export default function HomeTab() {
         return;
       }
 
-      // Save to Supabase
       const { error } = await supabase
         .from('user_income')
-        .insert([
-          { 
-            user_id: user.id, 
-            monthly_income: income 
-          }
-        ]);
+        .insert([{ user_id: user.id, monthly_income: income }]);
 
-      if (error) {
-        throw error;
-      }
+      if (error) throw error;
 
-  setCurrentIncome(income);
-  setMonthlyIncome('');
-  alert('Income saved successfully!');
-
-    } catch (error) {
-      console.error('Error saving income:', error);
+      setCurrentIncome(income);
+      setMonthlyIncome('');
+    } catch {
       alert('Failed to save income');
     } finally {
       setLoading(false);
     }
   };
 
-  // If user hasn't set up income yet, show onboarding
+  // 🎯 ONBOARDING: If no income set
   if (!currentIncome) {
     return (
-      <View style={styles.container}>
+      <View style={styles.onboardingContainer}>
         <Text style={styles.title}>Welcome to FinaxAI! 💰</Text>
-        
-        <Text style={styles.subtitle}>Enter your monthly income</Text>
+        <Text style={styles.subtitle}>Enter your monthly income to start</Text>
         
         <TextInput
           style={styles.input}
@@ -92,10 +80,10 @@ export default function HomeTab() {
         />
         
         {loading ? (
-          <ActivityIndicator size="large" color="#0000ff" />
+          <ActivityIndicator size="large" color="#10b981" />
         ) : (
           <Button 
-            title="Save Income" 
+            title="Start Tracking" 
             onPress={handleSaveIncome} 
             disabled={!monthlyIncome}
           />
@@ -104,32 +92,32 @@ export default function HomeTab() {
     );
   }
 
-  // If user has set up income, show the dashboard
+  // 🎯 DASHBOARD: Clean, focused answer to "Can I afford this?"
   return (
     <View style={styles.dashboardContainer}>
-      {/* Show current income at the top */}
-      <View style={styles.incomeHeader}>
-        <Text style={styles.incomeLabel}>Monthly Income:</Text>
-        <Text style={styles.incomeAmount}>${currentIncome}</Text>
-        <Text style={styles.changeText} onPress={() => setCurrentIncome(null)}>
-          Change
-        </Text>
-      </View>
-
-      {/* Dashboard Components */}
+      
+      {/* 🎯 1. Big Safe-to-Spend Number (CENTER) */}
       <SafeToSpendCalculator />
+      
+      {/* 📊 2. Mini-chart (Need vs Want ratio) */}
       <NeedVsWantChart />
+      
+      {/* 🎯 3. Goal progress (ONLY if behind schedule) */}
       <GoalWarning />
+      
+      {/* ➕ 4. Floating action button to add transaction */}
       <FloatingAddButton />
+      
     </View>
   );
 }
 
 const styles = StyleSheet.create({
-  container: {
+  onboardingContainer: {
     flex: 1,
     padding: 20,
     justifyContent: 'center',
+    backgroundColor: '#f8f9fa',
   },
   dashboardContainer: {
     flex: 1,
@@ -139,50 +127,25 @@ const styles = StyleSheet.create({
     padding: 20,
   },
   title: {
-    fontSize: 24,
+    fontSize: 28,
     fontWeight: 'bold',
-    marginBottom: 20,
+    marginBottom: 10,
     textAlign: 'center',
+    color: '#1f2937',
   },
   subtitle: {
     fontSize: 16,
-    marginBottom: 30,
+    marginBottom: 40,
     textAlign: 'center',
-    color: '#666',
+    color: '#6b7280',
   },
   input: {
     borderWidth: 1,
-    borderColor: '#ddd',
+    borderColor: '#d1d5db',
     padding: 15,
-    borderRadius: 10,
+    borderRadius: 12,
     marginBottom: 20,
     fontSize: 16,
-  },
-  incomeHeader: {
-    position: 'absolute',
-    top: 50,
-    alignItems: 'center',
     backgroundColor: 'white',
-    padding: 10,
-    borderRadius: 10,
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.1,
-    shadowRadius: 4,
-    elevation: 3,
-  },
-  incomeLabel: {
-    fontSize: 12,
-    color: '#666',
-  },
-  incomeAmount: {
-    fontSize: 18,
-    fontWeight: 'bold',
-    color: '#00cc00',
-  },
-  changeText: {
-    color: '#0066cc',
-    fontSize: 12,
-    marginTop: 4,
   },
 });
