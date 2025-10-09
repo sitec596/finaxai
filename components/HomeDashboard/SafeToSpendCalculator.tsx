@@ -2,14 +2,14 @@ import React from 'react';
 import { View, Text, StyleSheet } from 'react-native';
 
 export function SafeToSpendCalculator() {
-  // This will calculate: Income - Needs - Wants - Goals = Safe-to-Spend
-  const safeToSpend = 347; // We'll connect to real calculation later
+  // MVP: Hardcoded for now - this answers "Can I afford this?" directly
+  const safeToSpend = 347;
 
   return (
     <View style={styles.container}>
+      <Text style={styles.question}>Can I afford this?</Text>
       <Text style={styles.amount}>${safeToSpend}</Text>
-      <Text style={styles.label}>Safe to Spend</Text>
-      <Text style={styles.subLabel}>Available today</Text>
+      <Text style={styles.answer}>Yes, this is safe to spend today</Text>
     </View>
   );
 }
@@ -17,26 +17,27 @@ export function SafeToSpendCalculator() {
 const styles = StyleSheet.create({
   container: {
     alignItems: 'center',
-    marginBottom: 40,
-    marginTop: -50, // Pull it up to be more centered
+    marginBottom: 50,
+    marginTop: -80, // Pull it higher for better centering
+  },
+  question: {
+    fontSize: 18,
+    color: '#6b7280',
+    marginBottom: 10,
+    fontStyle: 'italic',
   },
   amount: {
-    fontSize: 72, // Even bigger!
+    fontSize: 80, // Even bigger for chatbot emphasis
     fontWeight: 'bold',
     color: '#10b981',
     textShadowColor: 'rgba(16, 185, 129, 0.3)',
-    textShadowOffset: { width: 0, height: 2 },
-    textShadowRadius: 10,
+    textShadowOffset: { width: 0, height: 4 },
+    textShadowRadius: 15,
   },
-  label: {
-    fontSize: 20,
+  answer: {
+    fontSize: 16,
     color: '#374151',
-    marginTop: 8,
-    fontWeight: '600',
-  },
-  subLabel: {
-    fontSize: 14,
-    color: '#6b7280',
-    marginTop: 4,
+    marginTop: 12,
+    fontWeight: '500',
   },
 });

@@ -1,12 +1,11 @@
 import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { View, Text, StyleSheet } from 'react-native';
 
 export function NeedVsWantChart() {
   return (
     <View style={styles.container}>
-  <Text style={styles.title}>This Month&apos;s Spending</Text>
+      <Text style={styles.title}>This Month's Balance</Text>
       <View style={styles.chartContainer}>
-        {/* Simple visual representation - we'll add actual chart later */}
         <View style={styles.chart}>
           <View style={[styles.slice, styles.needSlice]} />
           <View style={[styles.slice, styles.wantSlice]} />
@@ -14,11 +13,11 @@ export function NeedVsWantChart() {
         <View style={styles.legend}>
           <View style={styles.legendItem}>
             <View style={[styles.colorBox, styles.needColor]} />
-            <Text>Needs: 60%</Text>
+            <Text style={styles.legendText}>Needs: $1,200</Text>
           </View>
           <View style={styles.legendItem}>
             <View style={[styles.colorBox, styles.wantColor]} />
-            <Text>Wants: 40%</Text>
+            <Text style={styles.legendText}>Wants: $800</Text>
           </View>
         </View>
       </View>
@@ -40,10 +39,11 @@ const styles = StyleSheet.create({
     elevation: 3,
   },
   title: {
-    fontSize: 18,
+    fontSize: 16,
     fontWeight: '600',
     marginBottom: 15,
     textAlign: 'center',
+    color: '#374151',
   },
   chartContainer: {
     flexDirection: 'row',
@@ -67,7 +67,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#ef4444',
   },
   legend: {
-    gap: 10,
+    gap: 8,
   },
   legendItem: {
     flexDirection: 'row',
@@ -84,5 +84,9 @@ const styles = StyleSheet.create({
   },
   wantColor: {
     backgroundColor: '#ef4444',
+  },
+  legendText: {
+    fontSize: 14,
+    color: '#374151',
   },
 });
