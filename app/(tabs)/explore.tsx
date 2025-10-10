@@ -54,18 +54,26 @@ export default function ExploreScreen() {
   };
 
   const sections = [
-    {
-      title: 'Transaction History',
-      description: 'View your complete income and expense history',
-      icon: 'list.bullet',
-      onPress: () => router.push('/transactions'),
-    },
-    {
-      title: 'Financial Goals',
-      description: 'Track your savings targets and progress',
-      icon: 'target',
-      onPress: () => router.push('/goals'),
-    },
+  {
+    title: 'Transaction History',
+    description: 'View your complete income and expense history',
+    icon: 'list.bullet',
+    onPress: () => router.push('/transactions'),
+  },
+  {
+    title: 'Financial Goals',
+    description: 'Track your savings targets and progress',
+    icon: 'target',
+    onPress: () => router.push('/goals'),
+  },
+  {
+    title: 'Recurring Transactions',
+    description: 'Manage your automated bills and income',
+    icon: 'repeat',
+    onPress: () => router.push('/recurring-transactions'),
+  },
+
+
     {
       title: 'Spending Analytics',
       description: 'Detailed charts and insights',
